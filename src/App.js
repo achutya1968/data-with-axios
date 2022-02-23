@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import {useState,useEffect} from "react"
+import axios from "axios"
+export default function App() {
+  const [datas, setDatas] = useState([]);
+  const [getData, setGetData] = useState(false);
+  useEffect(() => {
+    async function loadData() {
+      setGetData(true);
+      const resp = await axios.get(
+        "https://jsonplaceholder.typicode.com/posts/"
+      );
+      setDatas(resp.data);
+      setGetData(false);
+    }
+    loadData();
+  }, []);
 
-function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1 style={{ textAlign: "center" }}>Axios test</h1>
+      {getData ? (
+        <h4>Loading...</h4>
+      ) : (
+        datas.map((data) => <div key={data.id}>{data.body}</div>)
+      )}
     </div>
   );
 }
 
-export default App;
