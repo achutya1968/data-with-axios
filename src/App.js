@@ -22,9 +22,11 @@ export default function App() {
       {getData ? (
         <h4>Loading...</h4>
       ) : (
-        datas.map((data) => <div key={data.id}>{data.body}</div>)
+        datas.map((data) => <div key={data.id}>{data.id}: {data.body}</div>)
       )}
     </div>
   );
 }
+
+
 
